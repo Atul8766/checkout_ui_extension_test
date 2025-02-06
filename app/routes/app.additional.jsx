@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export async function loader({ request }) {
   // const { admin } = await shopify.authenticate.admin(request);
-  const { sessionToken } = await authenticate.public.checkout(request);
+  const { sessionToken } = await authenticate.public.customerAccount(request);
   const { admin } = await unauthenticated.admin(sessionToken.dest);
 
   const response = await admin.graphql(
