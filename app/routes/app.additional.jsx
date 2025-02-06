@@ -23,6 +23,6 @@ export async function loader({ request }) {
     }`
   );
 
-  // const data = await response.json();
-  return json(sessionToken);
+  const data = await response.json();
+  return json(data);
 }

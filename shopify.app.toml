@@ -3,7 +3,7 @@
 client_id = "609fe9f27b2b83ab7a3b8273a8041f86"
 name = "order-app"
 handle = "order-app-79"
-application_url = "https://loose-efficiently-proper-advancement.trycloudflare.com"
+application_url = "https://greeting-chamber-hired-covers.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ scopes = "write_products,read_customers,unauthenticated_read_customers,read_orde
 
 [auth]
 redirect_urls = [
-  "https://loose-efficiently-proper-advancement.trycloudflare.com/auth/callback",
-  "https://loose-efficiently-proper-advancement.trycloudflare.com/auth/shopify/callback",
-  "https://loose-efficiently-proper-advancement.trycloudflare.com/api/auth/callback"
+  "https://greeting-chamber-hired-covers.trycloudflare.com/auth/callback",
+  "https://greeting-chamber-hired-covers.trycloudflare.com/auth/shopify/callback",
+  "https://greeting-chamber-hired-covers.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

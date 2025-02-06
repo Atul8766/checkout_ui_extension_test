@@ -6,11 +6,11 @@ import {
   Text,
   useApi,
   useApplyAttributeChange,
-  useInstructions,
-  useTranslate,
-  useCustomer
+  useInstructions, 
+  useTranslate, 
 } from "@shopify/ui-extensions-react/checkout";
 import { useState, useEffect } from 'react';
+
 // 1. Choose an extension target
 export default reactExtension("purchase.checkout.block.render", () => (
   <Extension />
@@ -18,20 +18,44 @@ export default reactExtension("purchase.checkout.block.render", () => (
 
 function Extension() {
   const translate = useTranslate();
-  const { data } = useApi();
+  const { extension, sessionToken } = useApi();
   const instructions = useInstructions();
   const applyAttributeChange = useApplyAttributeChange();
-  const customer = useCustomer();
 
-  console.log(customer); // ['VIP', 'Frequent Buyer', 'Newsletter Subscriber']
-  
+  // Make sure APP_URL is set correctly
+  const apiUrl = `${process.env.APP_URL}/app/additional`;
+  console.log("API URL:", apiUrl);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try { 
+        const token = await sessionToken.get();
+        console.log("Session Token:", token);
 
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  // 2. Check instructions for feature availability, see https://shopify.dev/docs/api/checkout-ui-extensions/apis/cart-instructions for details
+        if (!response.ok) {
+          throw new Error(`API call failed with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [apiUrl, sessionToken]);
+
+  // 2. Check instructions for feature availability
   if (!instructions.attributes.canUpdateAttributes) {
-    // For checkouts such as draft order invoices, cart attributes may not be allowed
-    // Consider rendering a fallback UI or nothing at all, if the feature is unavailable
     return (
       <Banner title="checkout-ui" status="warning">
         {translate("attributeChangesAreNotSupported")}
